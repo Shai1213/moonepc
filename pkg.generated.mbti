@@ -1,0 +1,175 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Shai1213/moonepc"
+
+// Values
+pub fn decode_epc96(String) -> Result[Epc96, EpcError]
+
+pub fn decode_epc96_batch(Array[String]) -> Array[Result[Epc96, EpcError]]
+
+pub fn decode_epc96_bit_string(String) -> Result[Epc96, EpcError]
+
+pub fn decode_epc96_bytes(Array[Byte]) -> Result[Epc96, EpcError]
+
+pub fn decode_epc96_bytes_at(Array[Byte], Int) -> Result[Epc96, EpcError]
+
+pub fn decode_epc96_records(Array[Byte], Int, Int, Int, Int) -> Result[Array[Result[Epc96, EpcError]], EpcError]
+
+pub fn decode_gdti96(String) -> Result[Gdti, EpcError]
+
+pub fn decode_giai96(String) -> Result[Giai, EpcError]
+
+pub fn decode_grai96(String) -> Result[Grai, EpcError]
+
+pub fn decode_sgln96(String) -> Result[Sgln, EpcError]
+
+pub fn decode_sgtin96(String) -> Result[Sgtin, EpcError]
+
+pub fn decode_sscc96(String) -> Result[Sscc, EpcError]
+
+pub fn encode_epc96_batch(Array[Epc96]) -> Array[Result[String, EpcError]]
+
+pub fn encode_epc96_bytes_into(Epc96, Array[Byte], Int) -> Result[Unit, EpcError]
+
+pub fn encode_epc96_records(Array[Epc96], Int, Int, Byte) -> Result[Array[Byte], EpcError]
+
+pub fn parse_epc96_identity_uri(String, Int) -> Result[Epc96, EpcError]
+
+pub fn parse_epc96_identity_uri_batch(Array[String], Array[Int]) -> Result[Array[Result[Epc96, EpcError]], EpcError]
+
+pub fn parse_epc96_tag_uri(String) -> Result[Epc96, EpcError]
+
+pub fn parse_epc96_tag_uri_batch(Array[String]) -> Array[Result[Epc96, EpcError]]
+
+pub fn parse_gdti_identity_uri(String, Int) -> Result[Gdti, EpcError]
+
+pub fn parse_gdti_tag_uri(String) -> Result[Gdti, EpcError]
+
+pub fn parse_giai_identity_uri(String, Int) -> Result[Giai, EpcError]
+
+pub fn parse_giai_tag_uri(String) -> Result[Giai, EpcError]
+
+pub fn parse_grai_identity_uri(String, Int) -> Result[Grai, EpcError]
+
+pub fn parse_grai_tag_uri(String) -> Result[Grai, EpcError]
+
+pub fn parse_sgln_identity_uri(String, Int) -> Result[Sgln, EpcError]
+
+pub fn parse_sgln_tag_uri(String) -> Result[Sgln, EpcError]
+
+pub fn parse_sgtin_identity_uri(String, Int) -> Result[Sgtin, EpcError]
+
+pub fn parse_sgtin_tag_uri(String) -> Result[Sgtin, EpcError]
+
+pub fn parse_sscc_identity_uri(String, Int) -> Result[Sscc, EpcError]
+
+pub fn parse_sscc_tag_uri(String) -> Result[Sscc, EpcError]
+
+// Errors
+
+// Types and methods
+pub enum Epc96 {
+  SGTIN96(Sgtin)
+  SSCC96(Sscc)
+  SGLN96(Sgln)
+  GRAI96(Grai)
+  GIAI96(Giai)
+  GDTI96(Gdti)
+}
+pub fn Epc96::encode_bit_string(Self) -> Result[String, EpcError]
+pub fn Epc96::encode_bytes(Self) -> Result[Array[Byte], EpcError]
+pub fn Epc96::encode_hex(Self) -> Result[String, EpcError]
+pub fn Epc96::inspect(Self) -> Epc96Info
+pub fn Epc96::to_identity(Self) -> Epc96Identity
+pub fn Epc96::to_identity_uri(Self) -> String
+pub fn Epc96::to_tag_uri(Self) -> String
+
+pub struct Epc96Identity {
+  uri : String
+  filter : Int
+}
+pub fn Epc96Identity::filter(Self) -> Int
+pub fn Epc96Identity::to_epc96(Self) -> Result[Epc96, EpcError]
+pub fn Epc96Identity::uri(Self) -> String
+
+pub struct Epc96Info {
+  scheme : String
+  header : Int
+  filter : Int
+  partition : Int
+  company_prefix_digits : Int
+  bit_length : Int
+}
+
+pub enum EpcError {
+  InvalidPrefix
+  InvalidField(String)
+  InvalidFilter(Int)
+  InvalidPartition(Int)
+  InvalidBitLength(Int)
+  InvalidByteOffset(Int)
+  InvalidHex
+  InvalidBinary
+  UnsupportedScheme(String)
+}
+
+pub struct Gdti {
+  filter : Int
+  company_prefix : String
+  document_type : String
+  serial : String
+}
+pub fn Gdti::encode_hex(Self) -> Result[String, EpcError]
+pub fn Gdti::to_identity_uri(Self) -> String
+pub fn Gdti::to_tag_uri(Self) -> String
+
+pub struct Giai {
+  filter : Int
+  company_prefix : String
+  asset_reference : String
+}
+pub fn Giai::encode_hex(Self) -> Result[String, EpcError]
+pub fn Giai::to_identity_uri(Self) -> String
+pub fn Giai::to_tag_uri(Self) -> String
+
+pub struct Grai {
+  filter : Int
+  company_prefix : String
+  asset_type : String
+  serial : String
+}
+pub fn Grai::encode_hex(Self) -> Result[String, EpcError]
+pub fn Grai::to_identity_uri(Self) -> String
+pub fn Grai::to_tag_uri(Self) -> String
+
+pub struct Sgln {
+  filter : Int
+  company_prefix : String
+  location_reference : String
+  extension : String
+}
+pub fn Sgln::encode_hex(Self) -> Result[String, EpcError]
+pub fn Sgln::to_identity_uri(Self) -> String
+pub fn Sgln::to_tag_uri(Self) -> String
+
+pub struct Sgtin {
+  filter : Int
+  company_prefix : String
+  item_reference : String
+  serial : String
+}
+pub fn Sgtin::encode_hex(Self) -> Result[String, EpcError]
+pub fn Sgtin::to_identity_uri(Self) -> String
+pub fn Sgtin::to_tag_uri(Self) -> String
+
+pub struct Sscc {
+  filter : Int
+  company_prefix : String
+  serial_reference : String
+}
+pub fn Sscc::encode_hex(Self) -> Result[String, EpcError]
+pub fn Sscc::to_identity_uri(Self) -> String
+pub fn Sscc::to_tag_uri(Self) -> String
+
+// Type aliases
+
+// Traits

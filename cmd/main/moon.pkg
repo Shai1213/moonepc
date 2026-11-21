@@ -1,0 +1,6 @@
+import {
+  "moonbitlang/core/env",
+  "Shai1213/moonepc",
+}
+
+pkgtype(kind: "executable")
