@@ -80,7 +80,8 @@ fn main {
     usage()
     fail("expected a command and input")
   }
-  if args.length() != 3 && !(args.length() == 4 && args[1] == "identity-encode") {
+  if (args[1] == "identity-encode" && args.length() != 4) ||
+    (args[1] != "identity-encode" && args.length() != 3) {
     usage()
     fail("unexpected number of arguments")
   }

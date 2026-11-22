@@ -92,3 +92,8 @@ jobs:
           output="$(moon run --target wasm cmd/main -- ignored identity-encode 3 urn:epc:id:gdti:0614141.12345.6789 2>&1)" && { echo "extra identity CLI argument unexpectedly succeeded" >&2; exit 1; }
           test "$(printf '%s\n' "$output" | tail -n 1)" = "error: unexpected number of arguments"
           if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi
+      - name: Reject missing identity parameters cleanly
+        run: |
+          if moon run --target wasm cmd/main -- identity-encode 3 > arity.log 2>&1; then exit 1; fi
+          grep -F 'error: unexpected number of arguments' arity.log
+          if grep -i 'panic\|out of bounds' arity.log; then exit 1; fi
