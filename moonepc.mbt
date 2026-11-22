@@ -588,6 +588,9 @@ pub fn parse_sgtin_tag_uri(uri : String) -> Result[Sgtin, EpcError] {
       value < power10(row.item_digits) => value
     _ => return Err(InvalidField("item_reference"))
   }
+  if parts[3].length() > 1 && parts[3].has_prefix("0") {
+    return Err(InvalidField("serial"))
+  }
   let serial = match number(parts[3]) {
     Some(value) if value < 1L << 38 => value
     _ => return Err(InvalidField("serial"))
@@ -1586,6 +1589,9 @@ pub fn Sgtin::encode_hex(self : Sgtin) -> Result[String, EpcError] {
   let item = match number(self.item_reference) {
     Some(v) => v
     None => return Err(InvalidField("item_reference"))
+  }
+  if self.serial.length() > 1 && self.serial.has_prefix("0") {
+    return Err(InvalidField("serial"))
   }
   let serial = match number(self.serial) {
     Some(v) => v

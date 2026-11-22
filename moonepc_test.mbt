@@ -442,3 +442,26 @@ test "generic EPC identity parsing requires and preserves a valid filter" {
     @moonepc.parse_epc96_identity_uri("urn:epc:id:gid:1.2.3", 0) is Err(_),
   )
 }
+
+///|
+test "SGTIN96 rejects lossy leading-zero serials" {
+  for serial in ["00", "01", "0006789"] {
+    assert_true(
+      @moonepc.parse_sgtin_tag_uri(
+        "urn:epc:tag:sgtin-96:3.0614141.812345." + serial,
+      )
+      is Err(_),
+    )
+    assert_true(
+      @moonepc.parse_sgtin_identity_uri(
+        "urn:epc:id:sgtin:0614141.812345." + serial,
+        3,
+      )
+      is Err(_),
+    )
+  }
+  assert_true(
+    @moonepc.parse_sgtin_tag_uri("urn:epc:tag:sgtin-96:3.0614141.812345.0")
+    is Ok(_),
+  )
+}
