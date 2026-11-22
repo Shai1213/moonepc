@@ -73,3 +73,9 @@ jobs:
           output="$(moon run --target wasm cmd/main -- decode not-hex 2>&1)" && { echo "invalid EPC input unexpectedly succeeded" >&2; exit 1; }
           test "$output" = "error: expected 96 bits, received 28"
           if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi
+          output="$(moon run --target wasm cmd/main -- sgtin-encode urn:epc:tag:sgtin-96:3.0614141.812345.6789 extra 2>&1)" && { echo "extra CLI argument unexpectedly succeeded" >&2; exit 1; }
+          test "$(printf '%s\n' "$output" | tail -n 1)" = "error: unexpected number of arguments"
+          if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi
+          output="$(moon run --target wasm cmd/main -- ignored identity-encode 3 urn:epc:id:gdti:0614141.12345.6789 2>&1)" && { echo "extra identity CLI argument unexpectedly succeeded" >&2; exit 1; }
+          test "$(printf '%s\n' "$output" | tail -n 1)" = "error: unexpected number of arguments"
+          if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi

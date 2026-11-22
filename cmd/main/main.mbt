@@ -70,16 +70,15 @@ fn main {
     usage()
     fail("expected a command and input")
   }
-  let command = if args.length() >= 4 &&
-    args[args.length() - 3] == "identity-encode" {
-    "identity-encode"
-  } else {
-    args[args.length() - 2]
+  if args.length() != 3 && !(args.length() == 4 && args[1] == "identity-encode") {
+    usage()
+    fail("unexpected number of arguments")
   }
-  let input = args[args.length() - 1]
+  let command = args[1]
+  let input = if command == "identity-encode" { args[3] } else { args[2] }
   match command {
     "identity-encode" =>
-      match parse_filter(args[args.length() - 2]) {
+      match parse_filter(args[2]) {
         Some(filter) =>
           match @moonepc.parse_epc96_identity_uri(input, filter) {
             Ok(value) =>
