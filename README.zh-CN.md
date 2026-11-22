@@ -61,6 +61,8 @@ moon run --target wasm cmd/main -- inspect 3074257bf7194e4000001a85
 
 解码器接受大小写十六进制，但输入必须恰好为 24 个十六进制字符（96 位）。
 
+CLI 使用 `--help` 或 `-h` 查看命令列表，使用 `--version` 或 `-V` 查看当前包版本。
+
 ## MoonBit API
 
 ```mbt

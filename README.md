@@ -65,6 +65,8 @@ moon run --target wasm cmd/main -- bits-encode urn:epc:tag:sgtin-96:3.0614141.81
 
 ## API 示例
 
+CLI 使用 `--help` 或 `-h` 查看命令列表，使用 `--version` 或 `-V` 查看当前包版本。
+
 ```mbt
 let epc = @moonepc.parse_sgtin_tag_uri(
   "urn:epc:tag:sgtin-96:3.0614141.812345.6789",

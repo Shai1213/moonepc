@@ -2,6 +2,8 @@
 fn usage() -> Unit {
   println("MoonEPC 0.1.0")
   println("Usage:")
+  println("  moonepc --help")
+  println("  moonepc --version")
   println("  moonepc sgtin-encode <tag-uri>")
   println("  moonepc sgtin-decode <96-bit-hex>")
   println("  moonepc sscc-encode <tag-uri>")
@@ -66,6 +68,14 @@ fn fail(message : String) -> Unit {
 ///|
 fn main {
   let args = @env.args()
+  if args.length() == 2 && (args[1] == "--help" || args[1] == "-h") {
+    usage()
+    return
+  }
+  if args.length() == 2 && (args[1] == "--version" || args[1] == "-V") {
+    println("0.1.0")
+    return
+  }
   if args.length() < 3 {
     usage()
     fail("expected a command and input")
