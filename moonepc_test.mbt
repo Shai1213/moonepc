@@ -538,3 +538,18 @@ test "GIAI96 rejects binary fields outside decimal partitions" {
     assert_true(@moonepc.decode_epc96(hex) is Err(_))
   }
 }
+
+///|
+test "GDTI96 rejects binary fields outside decimal partitions" {
+  for
+    hex in [
+      "2c03a3529440000000000000", "2c0000000000020000000000", "2c06e90edd00000000000000",
+      "2c0400000000140000000000", "2c0a540be400000000000000", "2c0800000000c80000000000",
+      "2c0fb9aca000000000000000", "2c0c00000007d00000000000", "2c12faf08000000000000000",
+      "2c100000004e200000000000", "2c16625a0000000000000000", "2c140000030d400000000000",
+      "2c1bd0900000000000000000", "2c1800001e84800000000000",
+    ] {
+    assert_true(@moonepc.decode_gdti96(hex) is Err(_))
+    assert_true(@moonepc.decode_epc96(hex) is Err(_))
+  }
+}
