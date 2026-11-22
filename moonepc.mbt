@@ -1236,6 +1236,9 @@ pub fn decode_giai96(hex : String) -> Result[Giai, EpcError] {
     return Err(InvalidPartition(index))
   }
   let row = partitions[index]
+  if read_bits(words, 14, row.company_bits) >= power10(row.company_digits) {
+    return Err(InvalidField("company_prefix"))
+  }
   Ok({
     filter: read_bits(words, 8, 3).to_int(),
     company_prefix: padded(
