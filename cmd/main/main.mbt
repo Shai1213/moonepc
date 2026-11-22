@@ -39,7 +39,7 @@ fn parse_filter(text : String) -> Int? {
 
 ///|
 fn error_text(error : @moonepc.EpcError) -> String {
-  let message = match error {
+  match error {
     @moonepc.InvalidPrefix => "invalid EPC URI prefix"
     @moonepc.InvalidField(field) => "invalid field: " + field
     @moonepc.InvalidFilter(value) =>
@@ -54,7 +54,12 @@ fn error_text(error : @moonepc.EpcError) -> String {
     @moonepc.InvalidBinary => "input contains a non-binary character"
     @moonepc.UnsupportedScheme(value) => "unsupported EPC header: " + value
   }
+}
+
+///|
+fn fail(message : String) -> Unit {
   println("error: " + message)
+  cli_exit_failure(1)
   panic()
 }
 
@@ -63,7 +68,7 @@ fn main {
   let args = @env.args()
   if args.length() < 3 {
     usage()
-    panic()
+    fail("expected a command and input")
   }
   let command = if args.length() >= 4 &&
     args[args.length() - 3] == "identity-encode" {
@@ -80,42 +85,39 @@ fn main {
             Ok(value) =>
               match value.encode_hex() {
                 Ok(hex) => println(hex)
-                Err(error) => println("error: " + error_text(error))
+                Err(error) => fail(error_text(error))
               }
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        None => {
-          println("error: invalid filter; expected 0..7")
-          panic()
-        }
+        None => fail("invalid filter; expected 0..7")
       }
     "bits-encode" =>
       match @moonepc.parse_epc96_tag_uri(input) {
         Ok(value) =>
           match value.encode_bit_string() {
             Ok(bits) => println(bits)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "bits-decode" =>
       match @moonepc.decode_epc96_bit_string(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "encode" =>
       match @moonepc.parse_epc96_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "decode" =>
       match @moonepc.decode_epc96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "inspect" =>
       match @moonepc.decode_epc96(input) {
@@ -131,95 +133,95 @@ fn main {
           println("bit_length=" + info.bit_length.to_string())
           println("tag_uri=" + value.to_tag_uri())
         }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sgtin-encode" =>
       match @moonepc.parse_sgtin_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sgtin-decode" =>
       match @moonepc.decode_sgtin96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sscc-encode" =>
       match @moonepc.parse_sscc_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sscc-decode" =>
       match @moonepc.decode_sscc96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sgln-encode" =>
       match @moonepc.parse_sgln_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "sgln-decode" =>
       match @moonepc.decode_sgln96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "grai-encode" =>
       match @moonepc.parse_grai_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "grai-decode" =>
       match @moonepc.decode_grai96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "giai-encode" =>
       match @moonepc.parse_giai_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "giai-decode" =>
       match @moonepc.decode_giai96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "gdti-encode" =>
       match @moonepc.parse_gdti_tag_uri(input) {
         Ok(value) =>
           match value.encode_hex() {
             Ok(hex) => println(hex)
-            Err(error) => println("error: " + error_text(error))
+            Err(error) => fail(error_text(error))
           }
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     "gdti-decode" =>
       match @moonepc.decode_gdti96(input) {
         Ok(value) => println(value.to_tag_uri())
-        Err(error) => println("error: " + error_text(error))
+        Err(error) => fail(error_text(error))
       }
     _ => {
       usage()
-      panic()
+      fail("unknown command: " + command)
     }
   }
 }

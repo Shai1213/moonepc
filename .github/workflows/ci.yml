@@ -57,7 +57,19 @@ jobs:
             echo "invalid EPC bit string unexpectedly succeeded" >&2
             exit 1
           fi
-          if moon run --target wasm cmd/main -- decode not-hex; then
-            echo "invalid EPC input unexpectedly succeeded" >&2
-            exit 1
-          fi
+          invalid_hex="00000000000000000000000x"
+          output="$(moon run --target wasm cmd/main -- decode "$invalid_hex" 2>&1)" && { echo "invalid hex unexpectedly succeeded" >&2; exit 1; }
+          test "$output" = "error: input contains a non-hexadecimal character"
+          invalid_bits="$(printf '%096d' 0)"
+          invalid_bits="x${invalid_bits:1}"
+          output="$(moon run --target wasm cmd/main -- bits-decode "$invalid_bits" 2>&1)" && { echo "invalid bit string unexpectedly succeeded" >&2; exit 1; }
+          test "$output" = "error: input contains a non-binary character"
+          short_bits="$(printf '%095d' 0)"
+          output="$(moon run --target wasm cmd/main -- bits-decode "$short_bits" 2>&1)" && { echo "short bit string unexpectedly succeeded" >&2; exit 1; }
+          test "$output" = "error: expected 96 bits, received 95"
+          output="$(moon run --target wasm cmd/main -- identity-encode 8 urn:epc:id:gdti:0614141.12345.6789 2>&1)" && { echo "invalid filter unexpectedly succeeded" >&2; exit 1; }
+          test "$output" = "error: invalid filter; expected 0..7"
+          if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi
+          output="$(moon run --target wasm cmd/main -- decode not-hex 2>&1)" && { echo "invalid EPC input unexpectedly succeeded" >&2; exit 1; }
+          test "$output" = "error: expected 96 bits, received 28"
+          if printf '%s\n' "$output" | grep -F 'RuntimeError: unreachable'; then exit 1; fi
