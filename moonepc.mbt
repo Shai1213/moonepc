@@ -885,6 +885,13 @@ pub fn decode_sgln96(hex : String) -> Result[Sgln, EpcError] {
     return Err(InvalidPartition(index))
   }
   let row = partitions[index]
+  if read_bits(words, 14, row.company_bits) >= power10(row.company_digits) {
+    return Err(InvalidField("company_prefix"))
+  }
+  if read_bits(words, 14 + row.company_bits, 41 - row.company_bits) >=
+    power10(12 - row.company_digits) {
+    return Err(InvalidField("location_reference"))
+  }
   let location_digits = 12 - row.company_digits
   let location_value = read_bits(
     words,

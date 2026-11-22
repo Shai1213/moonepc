@@ -495,3 +495,18 @@ test "SSCC96 rejects binary fields outside decimal partitions" {
     assert_true(@moonepc.decode_epc96(hex) is Err(_))
   }
 }
+
+///|
+test "SGLN96 rejects binary fields outside decimal partitions" {
+  for
+    hex in [
+      "3203a3529440000000000000", "320000000000020000000000", "3206e90edd00000000000000",
+      "320400000000140000000000", "320a540be400000000000000", "320800000000c80000000000",
+      "320fb9aca000000000000000", "320c00000007d00000000000", "3212faf08000000000000000",
+      "32100000004e200000000000", "3216625a0000000000000000", "32140000030d400000000000",
+      "321bd0900000000000000000", "321800001e84800000000000",
+    ] {
+    assert_true(@moonepc.decode_sgln96(hex) is Err(_))
+    assert_true(@moonepc.decode_epc96(hex) is Err(_))
+  }
+}
