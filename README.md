@@ -11,14 +11,26 @@ MoonEPC 是一个纯 MoonBit 的 GS1 EPC 标识与 RFID tag-memory 编解码库�
 
 - MoonBit CLI：使用支持 `moon.mod` 模块的近期稳定版。
 - 已验证目标：WebAssembly 与 JavaScript；Native 测试需要本机 C 编译器。
-- 包坐标：`Shai1213/moonepc@0.1.0`（发布完成前不能从公共 MoonCakes 安装）。
+- 包坐标：[`Shai1213/moonepc@0.1.0`](https://mooncakes.io/docs/Shai1213/moonepc)。
 - 通用入口：`parse_epc96_tag_uri` 按 tag URI 前缀识别编码；`parse_epc96_identity_uri` 解析身份 URI 并要求调用方提供 tag filter；`decode_epc96` 按 EPC header 识别 hex 输入。
 
-将下列依赖加入 MoonBit 模块：
+在消费者项目的 `moon.mod` 中加入精确版本依赖：
 
-```toml
-"Shai1213/moonepc" = "0.1.0"
+```moonbit
+import {
+  "Shai1213/moonepc@0.1.0",
+}
 ```
+
+在调用包的 `moon.pkg` 中加入导入：
+
+```moonbit
+import {
+  "Shai1213/moonepc",
+}
+```
+
+然后在消费者项目运行 `moon update` 和 `moon check --target wasm --deny-warn`。下方 CLI 命令在本项目源码根目录运行；API 示例放入消费者的 `fn main` 或测试块后运行。
 
 在包中导入 `Shai1213/moonepc`，使用各 scheme 对应的 `parse_*_tag_uri` 构造校验过的值，再调用 `encode_hex`；`decode_sgtin96`、`decode_sscc96`、`decode_sgln96`、`decode_grai96`、`decode_giai96` 与 `decode_gdti96` 负责反向解码。所有可预期输入错误通过 `Result[..., EpcError]` 返回。
 

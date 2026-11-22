@@ -4,17 +4,29 @@ MoonEPC 是纯 MoonBit 实现的 GS1 EPC 标识与 RFID tag-memory 编解码库�
 
 当前支持 SGTIN-96、SSCC-96、SGLN-96、GRAI-96、数字型 GIAI-96 与 GDTI-96。项目不实现通用 GS1 Application Identifier/条码解析、GS1 Digital Link、EPCIS 事件、RFID 空口帧或 CRC、硬件读写器驱动，也不声称覆盖完整 GS1 Tag Data Standard / Tag Data Translation。
 
-English: [README.md](README.md). 设计说明：[docs/design.md](docs/design.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
+主文档：[README.md](README.md)。 设计说明：[docs/design.md](docs/design.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
 
 ## 安装
 
 需要近期 MoonBit CLI（支持 `moon.mod`）；已验证 `wasm` 和 `js` 后端。Native 检查/运行还需要本机 C 编译器。发布状态应以 [MoonCakes 模块页](https://mooncakes.io/docs/Shai1213/moonepc) 为准；模块坐标为 `Shai1213/moonepc@0.1.0`。
 
-在 MoonBit 项目 `moon.mod` 中添加：
+在消费者项目的 `moon.mod` 中添加精确版本依赖：
 
-```toml
-"Shai1213/moonepc" = "0.1.0"
+```moonbit
+import {
+  "Shai1213/moonepc@0.1.0",
+}
 ```
+
+在调用包的 `moon.pkg` 中添加导入：
+
+```moonbit
+import {
+  "Shai1213/moonepc",
+}
+```
+
+然后运行 `moon update` 和 `moon check --target wasm --deny-warn`。下方 CLI 命令在本项目源码根目录运行；API 示例放入消费者的 `fn main` 或测试块后运行。
 
 在代码中导入 `Shai1213/moonepc`。推荐使用各 scheme 的 `parse_*_tag_uri` 或 `parse_*_identity_uri` 构造经过校验的值；预期输入错误通过 `Result[..., EpcError]` 返回。
 
