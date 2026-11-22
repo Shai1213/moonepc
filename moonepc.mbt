@@ -1633,6 +1633,13 @@ pub fn decode_sgtin96(hex : String) -> Result[Sgtin, EpcError] {
     return Err(InvalidPartition(index))
   }
   let row = partitions[index]
+  if read_bits(words, 14, row.company_bits) >= power10(row.company_digits) {
+    return Err(InvalidField("company_prefix"))
+  }
+  if read_bits(words, 14 + row.company_bits, 44 - row.company_bits) >=
+    power10(13 - row.company_digits) {
+    return Err(InvalidField("item_reference"))
+  }
   let company = read_bits(words, 14, row.company_bits).to_string()
   let item = read_bits(words, 14 + row.company_bits, row.item_bits).to_string()
   let serial = read_bits(words, 58, 38).to_string()

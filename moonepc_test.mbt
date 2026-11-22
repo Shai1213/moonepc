@@ -465,3 +465,18 @@ test "SGTIN96 rejects lossy leading-zero serials" {
     is Ok(_),
   )
 }
+
+///|
+test "SGTIN96 rejects binary fields outside decimal partitions" {
+  for
+    hex in [
+      "3003a3529440000000000000", "300000000000028000000000", "3006e90edd00000000000000",
+      "300400000000190000000000", "300a540be400000000000000", "300800000000fa0000000000",
+      "300fb9aca000000000000000", "300c00000009c40000000000", "3012faf08000000000000000",
+      "301000000061a80000000000", "3016625a0000000000000000", "3014000003d0900000000000",
+      "301bd0900000000000000000", "301800002625a00000000000",
+    ] {
+    assert_true(@moonepc.decode_sgtin96(hex) is Err(_))
+    assert_true(@moonepc.decode_epc96(hex) is Err(_))
+  }
+}
