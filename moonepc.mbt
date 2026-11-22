@@ -1075,6 +1075,13 @@ pub fn decode_grai96(hex : String) -> Result[Grai, EpcError] {
     return Err(InvalidPartition(index))
   }
   let row = partitions[index]
+  if read_bits(words, 14, row.company_bits) >= power10(row.company_digits) {
+    return Err(InvalidField("company_prefix"))
+  }
+  if read_bits(words, 14 + row.company_bits, 44 - row.company_bits) >=
+    power10(12 - row.company_digits) {
+    return Err(InvalidField("asset_type"))
+  }
   Ok({
     filter: read_bits(words, 8, 3).to_int(),
     company_prefix: padded(

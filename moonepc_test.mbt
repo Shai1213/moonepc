@@ -510,3 +510,18 @@ test "SGLN96 rejects binary fields outside decimal partitions" {
     assert_true(@moonepc.decode_epc96(hex) is Err(_))
   }
 }
+
+///|
+test "GRAI96 rejects binary fields outside decimal partitions" {
+  for
+    hex in [
+      "3303a3529440000000000000", "330000000000004000000000", "3306e90edd00000000000000",
+      "330400000000028000000000", "330a540be400000000000000", "330800000000190000000000",
+      "330fb9aca000000000000000", "330c00000000fa0000000000", "3312faf08000000000000000",
+      "331000000009c40000000000", "3316625a0000000000000000", "331400000061a80000000000",
+      "331bd0900000000000000000", "3318000003d0900000000000",
+    ] {
+    assert_true(@moonepc.decode_grai96(hex) is Err(_))
+    assert_true(@moonepc.decode_epc96(hex) is Err(_))
+  }
+}
