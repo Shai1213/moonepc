@@ -155,6 +155,23 @@ test "fixed-stride reader record offset overflow is reported without wrapping" {
 }
 
 ///|
+test "fixed-stride records reject invalid layout and retain partial rows" {
+  let bytes = Array::makei(12, fn(index) { index.to_byte() })
+  assert_true(@moonepc.decode_epc96_records(bytes, -1, 1, 12, 0) is Err(_))
+  assert_true(@moonepc.decode_epc96_records(bytes, 0, -1, 12, 0) is Err(_))
+  assert_true(@moonepc.decode_epc96_records(bytes, 0, 1, 12, 1) is Err(_))
+  assert_true(@moonepc.decode_epc96_records(bytes, 13, 0, 12, 0) is Err(_))
+  let empty = @moonepc.decode_epc96_records(bytes, 12, 0, 12, 0).unwrap()
+  assert_eq(empty.length(), 0)
+  let encoded = @moonepc.parse_epc96_tag_uri(
+    "urn:epc:tag:sgtin-96:3.0614141.812345.6789",
+  ).unwrap()
+  assert_true(
+    @moonepc.encode_epc96_records([encoded], 12, 1, (0).to_byte()) is Err(_),
+  )
+}
+
+///|
 test "batch identity parser checks row alignment before processing" {
   let parsed = @moonepc.parse_epc96_identity_uri_batch(
     ["urn:epc:id:sgtin:0614141.812345.6789", "invalid"],
