@@ -1461,6 +1461,13 @@ pub fn decode_sscc96(hex : String) -> Result[Sscc, EpcError] {
     return Err(InvalidPartition(index))
   }
   let row = partitions[index]
+  if read_bits(words, 14, row.company_bits) >= power10(row.company_digits) {
+    return Err(InvalidField("company_prefix"))
+  }
+  if read_bits(words, 14 + row.company_bits, 58 - row.company_bits) >=
+    power10(17 - row.company_digits) {
+    return Err(InvalidField("serial_reference"))
+  }
   Ok({
     filter,
     company_prefix: padded(
