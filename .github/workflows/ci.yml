@@ -98,7 +98,7 @@ jobs:
           printf '%s\n' "$output" | grep -F 'error: unexpected number of arguments'
           if printf '%s\n' "$output" | grep -i 'panic\|out of bounds'; then exit 1; fi
           if output="$(moon run --target wasm cmd/main -- identity-encode 2>&1)"; then exit 1; fi
-          printf '%s\n' "$output" | grep -F 'error: unexpected number of arguments'
+          printf '%s\n' "$output" | grep -F 'error: expected a command and input'
           if printf '%s\n' "$output" | grep -i 'panic\|out of bounds'; then exit 1; fi
           if output="$(moon run --target wasm cmd/main -- 2>&1)"; then exit 1; fi
           printf '%s\n' "$output" | grep -Fx 'Usage:'
