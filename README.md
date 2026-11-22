@@ -1,6 +1,7 @@
 # MoonEPC
 
 中文文档：[README.zh-CN.md](README.zh-CN.md)。
+设计说明：[docs/design.md](docs/design.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
 
 MoonEPC 是一个纯 MoonBit 的 GS1 EPC 标识与 RFID tag-memory 编解码库和命令行工具。它把严格校验的 EPC tag URI、pure-identity URI 与 SGTIN-96、SSCC-96、SGLN-96、GRAI-96、GIAI-96、GDTI-96 的 96 位十六进制表示互相转换，适用于读写器适配层、供应链标识服务和协议测试工具。
 

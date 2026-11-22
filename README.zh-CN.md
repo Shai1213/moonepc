@@ -4,7 +4,7 @@ MoonEPC 是纯 MoonBit 实现的 GS1 EPC 标识与 RFID tag-memory 编解码库�
 
 当前支持 SGTIN-96、SSCC-96、SGLN-96、GRAI-96、数字型 GIAI-96 与 GDTI-96。项目不实现通用 GS1 Application Identifier/条码解析、GS1 Digital Link、EPCIS 事件、RFID 空口帧或 CRC、硬件读写器驱动，也不声称覆盖完整 GS1 Tag Data Standard / Tag Data Translation。
 
-English: [README.md](README.md).
+English: [README.md](README.md). 设计说明：[docs/design.md](docs/design.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
 
 ## 安装
 
