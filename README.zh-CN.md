@@ -84,10 +84,11 @@ moon fmt
 moon check --target all --deny-warn
 moon test --target wasm --deny-warn
 moon test --target js --deny-warn
+moon test --target native --deny-warn
 moon run --target wasm cmd/main -- sgtin-decode 3074257bf7194e4000001a85
 ```
 
-GitHub Actions 对 push、pull request 和手动触发运行全目标检查、WASM/JS 测试及 CLI smoke tests。测试覆盖已知编码向量、六种 scheme 的分区边界 round-trip、统一分派、identity/tag URI 转换、记录字节偏移和非法输入拒绝路径。与 GS1 官方 TDT 转换器进行过每种受支持 scheme 一个向量的差分检查，6/6 编码值一致；这不是完整官方套件、全部分区或所有非法输入的兼容性认证。
+GitHub Actions 对 push、pull request 和手动触发运行全目标检查、WASM/JS/Native 测试，以及 WASM/Native CLI smoke tests。Native 本地测试与运行需安装 C 编译器。测试覆盖已知编码向量、六种 scheme 的分区边界 round-trip、统一分派、identity/tag URI 转换、记录字节偏移和非法输入拒绝路径。与 GS1 官方 TDT 转换器进行过每种受支持 scheme 一个向量的差分检查，6/6 编码值一致；这不是完整官方套件、全部分区或所有非法输入的兼容性认证。
 
 ## 兼容性边界
 

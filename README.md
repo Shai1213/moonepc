@@ -86,10 +86,11 @@ moon fmt
 moon check --target all --deny-warn
 moon test --target wasm --deny-warn
 moon test --target js --deny-warn
+moon test --target native --deny-warn
 moon run --target wasm cmd/main -- sgtin-decode 3074257bf7194e4000001a85
 ```
 
-GitHub Actions 在 push、pull request 和手动触发时运行全目标检查、WASM/JS 测试及 CLI smoke tests。Native 本地运行需安装 C 编译器。
+GitHub Actions 在 push、pull request 和手动触发时运行全目标检查、WASM/JS/Native 测试，以及 WASM/Native CLI smoke tests。Native 本地测试与运行需安装 C 编译器。
 
 ## 验证与限制
 
