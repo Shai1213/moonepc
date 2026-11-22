@@ -6,4 +6,4 @@
 - Add generic dispatch, explicit-filter identity URI conversion, bit-string and network-order byte codecs, batch operations and fixed-stride record helpers.
 - Add a command-line interface for scheme-specific and generic conversion, identity encoding, bit strings and EPC inspection.
 - Validate decoded binary fields against decimal partition capacities and reject SGTIN serial forms that cannot round-trip without losing leading zeros.
-- Verify six GS1 TDT reference vectors and malformed/boundary cases across WASM, JavaScript and wasm-gc test targets.
+- Verify six GS1 TDT reference vectors and malformed/boundary cases across WASM, JavaScript and wasm-gc test targets; 32 test cases pass on each target.
