@@ -570,3 +570,25 @@ test "GDTI96 rejects binary fields outside decimal partitions" {
     assert_true(@moonepc.decode_epc96(hex) is Err(_))
   }
 }
+
+///|
+test "every filter value roundtrips for all six EPC-96 schemes" {
+  let cases = [
+    ("sgtin-96", ".0614141.812345.6789"),
+    ("sscc-96", ".123456789012.12345"),
+    ("sgln-96", ".0614141.00123.456"),
+    ("grai-96", ".0614141.81234.123456"),
+    ("giai-96", ".999999.123456789"),
+    ("gdti-96", ".0614141.12345.6789"),
+  ]
+  for (scheme, fields) in cases {
+    for filter in 0..<8 {
+      let uri = "urn:epc:tag:" + scheme + ":" + filter.to_string() + fields
+      let value = @moonepc.parse_epc96_tag_uri(uri).unwrap()
+      let hex = value.encode_hex().unwrap()
+      let decoded = @moonepc.decode_epc96(hex).unwrap()
+      assert_eq(decoded.to_tag_uri(), uri)
+      assert_eq(decoded.inspect().filter, filter)
+    }
+  }
+}

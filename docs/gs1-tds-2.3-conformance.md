@@ -19,7 +19,7 @@ TDS 2.3.0 新增的 “++” schemes、其他 EPC schemes/编码长度、TDS 中
 | 数字型 GIAI-96 | 同上 | 七个 company-prefix 长度边界、identity/filter 往返 | TDT 向量 1 条 |
 | GDTI-96 | 同上 | 七个 partition 往返、41-bit serial 上界、header | TDT 向量 1 条 |
 
-每个 partition 的回归测试验证可解析输入在 encode→decode 后保持 tag URI；这是分区边界/往返覆盖，不是对全部十进制输入值的穷举。当前已留存的官方 TDT 差分为每种 scheme 一条，共 6/6；不能将其描述成整个官方语料库或所有边界值均已差分验证。输入拒绝路径由本地单元测试覆盖。要把项目终点宣称为已达到，仍应持续补充 TDT 2.2.0 可复现的全 partition/reference-vector 对照，并将生成的固定样本与测试输出纳入仓库。
+每个 partition 的回归测试验证可解析输入在 encode→decode 后保持 tag URI；这是分区边界/往返覆盖，不是对全部十进制输入值的穷举。当前已留存的官方 TDT 差分为每种 scheme 一条，共 6/6；不能将其描述成整个官方语料库或所有边界值均已差分验证。新增回归测试将 8 个 3-bit filter 值分别应用于 6 种 scheme，共检查 48 个编码/解码 URI 往返；每种 scheme 的 partition 边界、字段拒绝仍由其他本地测试覆盖。filter 全值测试是本地性质回归，不是额外官方 TDT 差分。要把项目终点宣称为已达到，仍应持续补充 TDT 2.2.0 可复现的全 partition/reference-vector 对照，并将生成的固定样本与测试输出纳入仓库。
 
 ## 六条可复现的代表性输入/输出
 

@@ -11,14 +11,14 @@ MoonEPC 是一个纯 MoonBit 的 GS1 EPC 标识与 RFID tag-memory 编解码库�
 
 - MoonBit CLI：使用支持 `moon.mod` 模块的近期稳定版。
 - 已验证目标：WebAssembly 与 JavaScript；Native 测试需要本机 C 编译器。
-- 包坐标：[`Shai1213/moonepc@0.1.0`](https://mooncakes.io/docs/Shai1213/moonepc)。
+- 包坐标：[`Shai1213/moonepc@0.1.1`](https://mooncakes.io/docs/Shai1213/moonepc)。
 - 通用入口：`parse_epc96_tag_uri` 按 tag URI 前缀识别编码；`parse_epc96_identity_uri` 解析身份 URI 并要求调用方提供 tag filter；`decode_epc96` 按 EPC header 识别 hex 输入。
 
 在消费者项目的 `moon.mod` 中加入精确版本依赖：
 
 ```moonbit
 import {
-  "Shai1213/moonepc@0.1.0",
+  "Shai1213/moonepc@0.1.1",
 }
 ```
 
@@ -109,7 +109,7 @@ GitHub Actions 在 push、pull request 和手动触发时运行全目标检查�
 
 ## 验证与限制
 
-测试包含已知编码向量、六种 scheme 的分区边界 round-trip、scheme 自动分派、identity/tag URI 转换、SSCC 分区往返，以及非法 filter、分区、hex 长度、字符和未知 header 的拒绝路径。测试覆盖不等同于 GS1 全套兼容性认证；目前没有宣称完成官方测试套件或所有 EPC scheme 的互操作验证。
+测试包含已知编码向量、六种 scheme 的分区边界 round-trip、六种 scheme 各自覆盖全部 8 个 filter 值的 48 组 URI 编解码往返、scheme 自动分派、identity/tag URI 转换、SSCC 分区往返，以及非法 filter、分区、hex 长度、字符和未知 header 的拒绝路径；当前 33 个测试用例在 WASM 与 JS 目标通过。测试覆盖不等同于 GS1 全套兼容性认证；目前没有宣称完成官方测试套件或所有 EPC scheme 的互操作验证。
 
 当前不支持 SGTIN-198、GRAI-170、字母数字型 GIAI、CPI、GID 等其他 scheme，以及 EPC URI 通用解析。遇到未知 header、错误长度、非法字符或字段越界时返回错误，而不是猜测或修复输入。
 

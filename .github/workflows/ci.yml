@@ -27,19 +27,19 @@ jobs:
           moon test --target js --deny-warn
           moon test --target native --deny-warn
           test "$(moon run --target native cmd/main -- sgtin-decode 3074257bf7194e4000001a85)" = "urn:epc:tag:sgtin-96:3.0614141.812345.6789"
-          test "$(moon run --target native cmd/main -- --version)" = "0.1.0"
+          test "$(moon run --target native cmd/main -- --version)" = "0.1.1"
           native_help="$(moon run --target native cmd/main -- --help)"
           printf '%s\n' "$native_help" | grep -Fx '  moonepc --help'
       - name: Run CLI smoke tests
         run: |
-          test "$(moon run --target wasm cmd/main -- --version)" = "0.1.0"
-          test "$(moon run --target wasm cmd/main -- -V)" = "0.1.0"
+          test "$(moon run --target wasm cmd/main -- --version)" = "0.1.1"
+          test "$(moon run --target wasm cmd/main -- -V)" = "0.1.1"
           help="$(moon run --target wasm cmd/main -- --help)"
           printf '%s\n' "$help" | grep -Fx '  moonepc --help'
           printf '%s\n' "$help" | grep -Fx '  moonepc --version'
           short_help="$(moon run --target wasm cmd/main -- -h)"
           printf '%s\n' "$short_help" | grep -Fx '  moonepc --help'
-          test "$(moon run --target native cmd/main -- --version)" = "0.1.0"
+          test "$(moon run --target native cmd/main -- --version)" = "0.1.1"
           test "$(moon run --target wasm cmd/main -- sgtin-encode urn:epc:tag:sgtin-96:3.0614141.812345.6789)" = "3074257bf7194e4000001a85"
           test "$(moon run --target wasm cmd/main -- sgtin-decode 3074257bf7194e4000001a85)" = "urn:epc:tag:sgtin-96:3.0614141.812345.6789"
           test "$(moon run --target wasm cmd/main -- sscc-encode urn:epc:tag:sscc-96:0.123456789012.12345)" = "310072fa6468503039000000"

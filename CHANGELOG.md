@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Add a regression matrix for all eight 3-bit filter values across six EPC-96 schemes (48 scheme/filter roundtrips).
+- Distinguish local regression coverage from the six official TDT reference-vector comparisons.
+
 ## 0.1.0
 
 - Add strict EPC-96 URI parsing and encoding/decoding for SGTIN, SSCC, SGLN, GRAI, numeric GIAI and GDTI.

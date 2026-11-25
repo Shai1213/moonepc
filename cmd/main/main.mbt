@@ -1,6 +1,6 @@
 ///|
 fn usage() -> Unit {
-  println("MoonEPC 0.1.0")
+  println("MoonEPC 0.1.1")
   println("Usage:")
   println("  moonepc --help")
   println("  moonepc --version")
@@ -73,7 +73,7 @@ fn main {
     return
   }
   if args.length() == 2 && (args[1] == "--version" || args[1] == "-V") {
-    println("0.1.0")
+    println("0.1.1")
     return
   }
   if args.length() < 3 {
