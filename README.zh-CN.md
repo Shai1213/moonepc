@@ -4,7 +4,7 @@ MoonEPC 是纯 MoonBit 实现的 GS1 EPC 标识与 RFID tag-memory 编解码库�
 
 当前支持 SGTIN-96、SSCC-96、SGLN-96、GRAI-96、数字型 GIAI-96 与 GDTI-96。项目不实现通用 GS1 Application Identifier/条码解析、GS1 Digital Link、EPCIS 事件、RFID 空口帧或 CRC、硬件读写器驱动，也不声称覆盖完整 GS1 Tag Data Standard / Tag Data Translation。
 
-主文档：[README.md](README.md)。 设计说明：[docs/design.md](docs/design.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
+主文档：[README.md](README.md)。 设计说明：[docs/design.md](docs/design.md)；GS1 规范版本、六种编码符合性范围和代表性向量：[docs/gs1-tds-2.3-conformance.md](docs/gs1-tds-2.3-conformance.md)；版本记录：[CHANGELOG.md](CHANGELOG.md)。
 
 ## 安装
 
@@ -108,7 +108,7 @@ GitHub Actions 对 push、pull request 和手动触发运行全目标检查、WA
 
 不支持 SGTIN-198、GRAI-170、字母数字型 GIAI、CPI、GID 等其它 scheme，也不解析任意 EPC URI。遇到未知 header、错误长度、非法字符、越界字段或无效 filter/partition 时返回错误，不猜测或自动修复输入。当前兼容性声明限于仓库列出的测试和六条 TDT 差分向量。
 
-位布局依据 GS1 EPC Tag Data Standard (TDS) 与 Tag Data Translation (TDT) 的公开定义。本项目为独立 MoonBit 实现，不复制 TDT 实现代码或生成数据。标准入口：[GS1 TDS](https://ref.gs1.org/standards/tds/)；参考转换器：[GS1 TDT](https://github.com/gs1/TDT)。
+规范版本固定为 GS1 EPC Tag Data Standard (TDS) Release 2.3.0，机器可读翻译基线为 TDT 2.2.0；本项目终点是对六种已列明 EPC-96 scheme 的编码布局、filter、partition、URI 映射和边界行为实现限定范围内的完整符合性，不是完整 TDS/TDT 支持或 GS1 认证。TDS 2.3.0 新增的 “++” schemes 不在当前支持范围。当前官方 TDT 差分证据为六种各一条（6/6），完整目标与现有证据差异、六组代表性输入输出见 [符合性范围说明](docs/gs1-tds-2.3-conformance.md)。本项目为独立 MoonBit 实现，不复制 TDT 实现代码或生成数据。标准：[TDS 2.3.0](https://ref.gs1.org/standards/tds/2.3.0/)；机器可读基线：[TDT 2.2.0](https://ref.gs1.org/standards/tdt/2.2.0/)。
 
 ## 许可与 AI 披露
 

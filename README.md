@@ -115,6 +115,6 @@ GitHub Actions 在 push、pull request 和手动触发时运行全目标检查�
 
 ## 标准、来源与许可
 
-位布局以 GS1 EPC Tag Data Standard (TDS) 与 Tag Data Translation (TDT) 的公开定义为行为依据；本项目为独立 MoonBit 实现，不复制上游实现代码或生成数据。格式及官方参考链接见 [GS1 TDS](https://ref.gs1.org/standards/tds/) 与 [GS1 TDT](https://github.com/gs1/TDT)。
+规范基线固定为 GS1 EPC Tag Data Standard (TDS) Release 2.3.0，TDT 2.2.0 作为机器可读参考；项目只针对 SGTIN-96、SSCC-96、SGLN-96、GRAI-96、数字型 GIAI-96、GDTI-96 定义范围内的符合性目标，不声称支持完整 TDS/TDT 或已取得 GS1 认证。TDS 2.3.0 新增的 “++” schemes 不在当前范围。当前官方差分为六种 scheme 各一条（6/6）；明确目标、测试覆盖和六个代表性 I/O 见 [TDS 2.3.0 conformance scope](docs/gs1-tds-2.3-conformance.md)。本项目为独立 MoonBit 实现，不复制上游实现代码或生成数据。官方标准：[TDS 2.3.0](https://ref.gs1.org/standards/tds/2.3.0/)；[TDT 2.2.0](https://ref.gs1.org/standards/tdt/2.2.0/)。
 
 代码按 Apache-2.0 许可发布，详见 [LICENSE](LICENSE)。本项目使用 AI 辅助编写与审阅代码、测试及文档；协议行为仍须以标准来源和可复现测试验证。
